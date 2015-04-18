@@ -1,0 +1,4 @@
+ansible
+flask
+flask-socketio
+celery[redis]

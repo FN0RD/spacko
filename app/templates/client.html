@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}SPACKO - {{ client.name }}{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <div class="profile-header">
+        <h1>{{ client.name }}</h1>
+        {% if client.client_role %}<p>{{ client.client_role }}</p>{% endif %}
+        {% if client.is_online() %}<p>Up and running.</p>{% endif %}
+        <p>
+            <a class="btn btn-default" href="{{ url_for('.edit_client') }}">Edit Client</a>
+            {% if current_user.is_administrator() %}
+            <a class="btn btn-danger" href="{{ url_for('.edit_client_admin', id=client.id) }}">Edit Client [Admin]</a>
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

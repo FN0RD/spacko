@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, abort, flash, request, cur
 from flask.ext.login import login_required, current_user
 from . import main
 from .. import db
-from ..models import Permission, Role
+from ..models.auth import Permission, Role
 from ..decorators import admin_required
 
 

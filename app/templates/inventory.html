@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>Inventories</h1>
+</div>
+
+<button type="button" class="btn btn-primary pull-right">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	Upload Playbook
+</button>
+
+<table class="table table-bordered table-striped">
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Filename</th>
+</tr>
+{% for i in inventories %}
+<tr>
+	<td>{{ i.id }}</td>
+	<td>{{ i.name }}</td>
+	<td>{{ i.filename }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

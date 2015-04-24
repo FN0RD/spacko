@@ -3,6 +3,7 @@ from flask.ext.login import login_required, current_user
 from . import main
 from .. import db
 from ..auth.models import Permission, Role
+from .models import SimpleInventory
 from ..decorators import admin_required
 
 
@@ -11,3 +12,9 @@ from ..decorators import admin_required
 def index():
     return render_template('index.html')
 
+@main.route('/inventory', methods=['GET', 'POST'])
+@login_required
+def inventories():
+	inventories = SimpleInventory.query.all()
+	return render_template('inventory.html', inventories=inventories)
+	

@@ -8,6 +8,9 @@
 /share
 /pip-selfcheck.json
 /__pycache__
-data-dev.sqlite
 *.pyc
 *.pyo
+
+# Other stuff
+*.swp
+*.sqlite

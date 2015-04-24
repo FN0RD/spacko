@@ -6,11 +6,9 @@ from flask import current_app, request
 from flask.ext.login import UserMixin
 from . import db, login_manager
 
-
 class Permission:
     MODERATE = 0x02
     ADMINISTER = 0x80
-
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -79,34 +77,3 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-class Client(db.Model):
-    __tablename__ = 'clients'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    client_ip = db.Column(db.String(64), unique=True)
-    client_role = db.relationship('AnsibleRole', backref='rolename', lazy='dynamic')
-    client_specs = db.relationship('ClientTypes', backref='hardware', lazy='dynamic')
-    comments = db.Column(db.Text())
-
-    def is_online(self):
-        #return ansible.ping()
-        return true
-
-class Play(db.Model):
-    __tablename__ = 'plays'
-    id = db.Column(db.Integer, primary_key=True) 
-    name = db.Column(db.String(64), unique=True)
-    
-class AnsibleRole(db.Model):
-    __tablename__ = 'ansibleroles'
-    id = db.Column(db.Integer, primary_key=True)
-    rolename = db.Column(db.String(64), unique=True)
-    description = db.Column(db.Text())
-
-
-class ClientType(db.Model):
-    __tablename__ = 'clienttypes'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    hardware = db.Column(db.Text())

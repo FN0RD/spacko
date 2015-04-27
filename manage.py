@@ -17,6 +17,27 @@ def make_shell_context():
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
+@manager.command
+def createsuperuser(username="root", email="root@localhost"):
+	"""
+	Create a superuser
+	"""
+	import getpass
+	password = getpass.getpass()
+	admin_role = Role.query.filter_by(name='Administrator').first()
+	# FIXME: check if the account exists first
+	u = User(username=username, email=email, role=admin_role, password=password)
+	db.session.add(u)
+	db.session.commit()
+
+
+@manager.command
+def initdb():
+	"""
+	Initialize the database on the first run
+	"""
+	db.create_all()
+	Role.insert_roles()
 
 @manager.command
 def test():

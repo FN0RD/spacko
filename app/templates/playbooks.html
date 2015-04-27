@@ -24,12 +24,18 @@
 	<th>ID</th>
 	<th>Name</th>
 	<th>Filename</th>
+	<th></th>
 </tr>
 {% for p in playbooks %}
 <tr>
 	<td>{{ p.id }}</td>
 	<td>{{ p.name }}</td>
 	<td>{{ p.filename }}</td>
+	<td><div class="btn-group" role="group">
+			<a href="{{ url_for('main.playbook_delete', playbook_id=p.id) }}" class="btn btn-default">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</a>
+	</div></td>
 </tr>
 {% endfor %}
 </table>

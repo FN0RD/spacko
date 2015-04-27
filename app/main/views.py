@@ -47,3 +47,25 @@ def playbooks():
 
 	playbooks = PlayBook.query.all()
 	return render_template('playbooks.html', playbooks=playbooks, uploadform=uploadform)
+
+
+@main.route('/playbooks/<int:playbook_id>/delete', methods=('GET', 'POST'))
+@login_required
+def playbook_delete(playbook_id):
+	# TODO: Ask for confirmation here
+	playbook = PlayBook.query.filter_by(id=playbook_id)
+	os.unlink(playbook.first().filename)
+	playbook.delete()
+	flash("Playbook deleted")
+	return redirect(url_for('.playbooks'))
+
+
+@main.route('/inventory/<int:inventory_id>/delete', methods=('GET', 'POST'))
+@login_required
+def inventory_delete(inventory_id):
+	# TODO: Ask for confirmation here
+	inventory = SimpleInventory.query.filter_by(id=inventory_id)
+	os.unlink(inventory.first().filename)
+	inventory.delete()
+	flash("Inventory deleted")
+	return redirect(url_for('.inventories'))

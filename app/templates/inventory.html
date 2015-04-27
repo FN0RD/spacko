@@ -24,12 +24,18 @@
 	<th>ID</th>
 	<th>Name</th>
 	<th>Filename</th>
+	<th></th>
 </tr>
 {% for i in inventories %}
 <tr>
 	<td>{{ i.id }}</td>
 	<td>{{ i.name }}</td>
 	<td>{{ i.filename }}</td>
+	<td><div class="btn-group" role="group">
+			<a href="{{ url_for('main.inventory_delete', inventory_id=i.id) }}" class="btn btn-default">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</a>
+	</div></td>
 </tr>
 {% endfor %}
 </table>

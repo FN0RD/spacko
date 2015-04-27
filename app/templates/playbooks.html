@@ -2,19 +2,19 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Inventory{% endblock %}
+{% block title %}Playbook{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
-	<h1>Inventories</h1>
+	<h1>Playbooks</h1>
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-heading">Upload an inventory</div>
+	<div class="panel-heading">Upload a Playbook</div>
 	<form class="form-inline panel-body" method="post" role="form" enctype="multipart/form-data">
 		{{ uploadform.hidden_tag() }}
 		{{ wtf.form_errors(uploadform, hiddens="only") }}
-		<div class="form-group">{{ uploadform.inventory() }}</div>
+		<div class="form-group">{{ uploadform.playbook() }}</div>
 		<div class="form-group pull-right">{{ uploadform.submit(class_="btn btn-primary") }}</div>
 	</form>
 </div>
@@ -25,11 +25,11 @@
 	<th>Name</th>
 	<th>Filename</th>
 </tr>
-{% for i in inventories %}
+{% for p in playbooks %}
 <tr>
-	<td>{{ i.id }}</td>
-	<td>{{ i.name }}</td>
-	<td>{{ i.filename }}</td>
+	<td>{{ p.id }}</td>
+	<td>{{ p.name }}</td>
+	<td>{{ p.filename }}</td>
 </tr>
 {% endfor %}
 </table>

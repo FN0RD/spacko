@@ -14,3 +14,5 @@
 # Other stuff
 *.swp
 *.sqlite
+inventories/
+playbooks/

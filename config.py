@@ -15,6 +15,8 @@ class Config:
     APP_ADMIN = os.environ.get('APP_ADMIN')
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+    INVENTORY_DIR = os.path.join(basedir, "inventories")
+    PLAYBOOK_DIR = os.path.join(basedir, "playbooks")
 
     @staticmethod
     def init_app(app):

@@ -1,13 +1,11 @@
-from datetime import datetime
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request
 from flask.ext.login import UserMixin
 from .. import db, login_manager
 
 class Permission:
-    MODERATE = 0x02
+    MODERATE = 0x01
     ADMINISTER = 0x80
 
 class Role(db.Model):
@@ -21,8 +19,8 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.MODERATE, True),
-            'Administrator': (0xff, False)
+            'Aufsicht': (Permission.MODERATE, True),
+            'Tutor': (0xff, False)
             }
         for r in roles:
             role = Role.query.filter_by(name=r).first()
@@ -40,22 +38,22 @@ class Role(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(64), unique=True, index=True)
-    username = db.Column(db.String(64), unique=True, index=True)
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(64), unique=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128))
 
     def __init__(self, **kwargs):
+        self.username = username
         super(User, self).__init__(**kwargs)
         if self.role is None:
-            if self.email == current_app.config['APP_ADMIN']:
+            if self.username == current_app.config['APP-ADMIN']:
                 self.role = Role.query.filter_by(permissions=0xff).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+            self.role = Role.query.filter_by(default=True).first()
 
     @property
     def password(self):
-        raise AttributeError('password is not a readable attribute')
+        raise AttributeError('password not readable')
 
     @password.setter
     def password(self, password):
@@ -65,14 +63,13 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def can(self, permissions):
-        return self.role is not None and (self.role.permissions & permissions) == permissions
+        return self.role is not None and \
+                (self.role.permissions & permissions) == permissions
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
-
     def __repr__(self):
-        return '<User %r>' % self.username
-
+        return '<User %r>' % self.name
 
 @login_manager.user_loader
 def load_user(user_id):

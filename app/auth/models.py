@@ -19,8 +19,8 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'Aufsicht': (Permission.MODERATE, True),
-            'Tutor': (0xff, False)
+            'mod': (Permission.MODERATE, True),
+            'admin': (0xff, False)
             }
         for r in roles:
             role = Role.query.filter_by(name=r).first()
@@ -43,11 +43,13 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128))
 
-    def __init__(self, **kwargs):
+    def __init__(self, username, password, email, role=None, **kwargs):
         self.username = username
+        self.password = password
+        self.email = email
         super(User, self).__init__(**kwargs)
         if self.role is None:
-            if self.username == current_app.config['APP-ADMIN']:
+            if self.username == current_app.config['APP_ADMIN']:
                 self.role = Role.query.filter_by(permissions=0xff).first()
             self.role = Role.query.filter_by(default=True).first()
 
@@ -68,8 +70,9 @@ class User(UserMixin, db.Model):
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
+
     def __repr__(self):
-        return '<User %r>' % self.name
+        return '<User %r>' % self.username
 
 @login_manager.user_loader
 def load_user(user_id):

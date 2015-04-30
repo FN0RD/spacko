@@ -25,6 +25,8 @@ def createsuperuser(username="root", email="root@localhost"):
 	import getpass
 	password = getpass.getpass()
 	admin_role = Role.query.filter_by(name='Administrator').first()
+	if admin_role is None:
+		raise ValueError('Admin role not found. Did you initialize the database with manage.py initdb')
 	# FIXME: check if the account exists first
 	u = User(username=username, email=email, role=admin_role, password=password)
 	db.session.add(u)

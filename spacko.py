@@ -11,6 +11,6 @@ celery.conf.update(app.config)
 
 @celery.task
 def foo():
-	return "bar"
+    return "bar"
 
 r = foo.delay()

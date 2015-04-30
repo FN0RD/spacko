@@ -6,36 +6,36 @@
 
 {% block page_content %}
 <div class="page-header">
-	<h1>Playbooks</h1>
+    <h1>Playbooks</h1>
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-heading">Upload a Playbook</div>
-	<form class="form-inline panel-body" method="post" role="form" enctype="multipart/form-data">
-		{{ uploadform.hidden_tag() }}
-		{{ wtf.form_errors(uploadform, hiddens="only") }}
-		<div class="form-group">{{ uploadform.playbook() }}</div>
-		<div class="form-group pull-right">{{ uploadform.submit(class_="btn btn-primary") }}</div>
-	</form>
+    <div class="panel-heading">Upload a Playbook</div>
+    <form class="form-inline panel-body" method="post" role="form" enctype="multipart/form-data">
+        {{ uploadform.hidden_tag() }}
+        {{ wtf.form_errors(uploadform, hiddens="only") }}
+        <div class="form-group">{{ uploadform.playbook() }}</div>
+        <div class="form-group pull-right">{{ uploadform.submit(class_="btn btn-primary") }}</div>
+    </form>
 </div>
 
 <table class="table table-bordered table-striped">
 <tr>
-	<th>ID</th>
-	<th>Name</th>
-	<th>Filename</th>
-	<th></th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Filename</th>
+    <th></th>
 </tr>
 {% for p in playbooks %}
 <tr>
-	<td>{{ p.id }}</td>
-	<td>{{ p.name }}</td>
-	<td>{{ p.filename }}</td>
-	<td><div class="btn-group" role="group">
-			<a href="{{ url_for('main.playbook_delete', playbook_id=p.id) }}" class="btn btn-default">
-				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-			</a>
-	</div></td>
+    <td>{{ p.id }}</td>
+    <td>{{ p.name }}</td>
+    <td>{{ p.filename }}</td>
+    <td><div class="btn-group" role="group">
+            <a href="{{ url_for('main.playbook_delete', playbook_id=p.id) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+    </div></td>
 </tr>
 {% endfor %}
 </table>

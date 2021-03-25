@@ -23,7 +23,7 @@ MarkupSafe==0.18
 paramiko==1.15.2
 pycrypto==2.6.1
 pytz==2015.2
-PyYAML==3.11
+PyYAML==5.4
 SQLAlchemy==0.8.4
 Werkzeug==0.9.6
 WTForms==1.0.5

@@ -25,5 +25,5 @@ pycrypto==2.6.1
 pytz==2015.2
 PyYAML==3.11
 SQLAlchemy==0.8.4
-Werkzeug==0.9.6
+Werkzeug==0.15.3
 WTForms==1.0.5

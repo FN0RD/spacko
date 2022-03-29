@@ -20,7 +20,7 @@ Jinja2==2.7.1
 kombu==3.0.26
 Mako==0.9.1
 MarkupSafe==0.18
-paramiko==1.15.2
+paramiko==2.10.1
 pycrypto==2.6.1
 pytz==2015.2
 PyYAML==3.11
